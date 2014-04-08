@@ -1,3 +1,11 @@
+Testing yahoo.com...  vulnerable.
+Testing imgur.com...  vulnerable.
+Testing stackoverflow.com...  vulnerable.
+Testing kickass.to...  vulnerable.
+Testing flickr.com...  vulnerable.
+
+-
+
 Testing google.com...  not vulnerable.
 Testing facebook.com...  not vulnerable.
 Testing youtube.com...  not vulnerable.
