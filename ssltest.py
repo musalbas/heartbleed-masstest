@@ -141,7 +141,7 @@ def is_vulnerable(domain):
 
 def main():
     opts, args = options.parse_args()
-    if len(args) < 1:
+    if len(args) < 2:
         options.print_help()
         return
 
