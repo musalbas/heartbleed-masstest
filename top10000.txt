@@ -38,7 +38,7 @@ Testing zoho.com...  vulnerable.
 Testing yts.re...  vulnerable.
 Testing usmagazine.com...  vulnerable.
 Testing letitbit.net...  vulnerable.
-Testing fool.com...  vulnerable.
+Testing fool.com...  not vulnerable.
 Testing digitalpoint.com...  vulnerable.
 Testing picmonkey.com...  vulnerable.
 Testing petflow.com...  vulnerable.
@@ -10632,5 +10632,5 @@ Testing bigxvideos.com...  no SSL.
 Testing winscp.net...  vulnerable.
 
 No SSL: 5683
-Vulnerable: 629
-Not vulnerable: 3688
+Vulnerable: 628
+Not vulnerable: 3689

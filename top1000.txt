@@ -38,7 +38,7 @@ Testing entrepreneur.com...  vulnerable.
 Testing zoho.com...  vulnerable.
 Testing yts.re...  vulnerable.
 Testing usmagazine.com...  vulnerable.
-Testing fool.com...  vulnerable.
+Testing fool.com...  not vulnerable.
 Testing digitalpoint.com...  vulnerable.
 Testing picmonkey.com...  vulnerable.
 Testing petflow.com...  vulnerable.
@@ -1051,5 +1051,5 @@ Testing linkwithin.com...  no SSL.
 Testing homeway.com.cn...  no SSL.
 
 No SSL: 512
-Vulnerable: 48
-Not vulnerable: 440
+Vulnerable: 47
+Not vulnerable: 441
