@@ -1,3 +1,8 @@
+Disclaimer: This scan was performed around April 8, 12:00 UTC, so please stop
+sending pull requests to remove your site!
+
+-
+
 Testing yahoo.com...  vulnerable.
 Testing stackoverflow.com...  vulnerable.
 Testing kickass.to...  vulnerable.
