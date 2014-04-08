@@ -38,7 +38,7 @@ Testing entrepreneur.com...  vulnerable.
 Testing zoho.com...  vulnerable.
 Testing yts.re...  vulnerable.
 Testing usmagazine.com...  vulnerable.
-Testing fool.com...  vulnerable.
+Testing fool.com...  not vulnerable.
 Testing digitalpoint.com...  vulnerable.
 Testing picmonkey.com...  vulnerable.
 Testing petflow.com...  vulnerable.
