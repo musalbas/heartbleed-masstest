@@ -1,3 +1,4 @@
+Testing lastpass.com... vulnerable.
 Testing yahoo.com...  vulnerable.
 Testing imgur.com...  vulnerable.
 Testing stackoverflow.com...  vulnerable.
