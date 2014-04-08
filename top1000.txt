@@ -29,7 +29,7 @@ Testing 123rf.com...  vulnerable.
 Testing m-w.com...  vulnerable.
 Testing dreamstime.com...  vulnerable.
 Testing amung.us...  vulnerable.
-Testing duckduckgo.com...  vulnerable.
+Testing duckduckgo.com... not vulnerable.
 Testing leo.org...  vulnerable.
 Testing eventbrite.com...  vulnerable.
 Testing wetransfer.com...  vulnerable.
@@ -710,7 +710,7 @@ Testing linksynergy.com...  no SSL.
 Testing wow.com...  no SSL.
 Testing cnbc.com...  not vulnerable.
 Testing google.kz...  not vulnerable.
-Testing duckduckgo.com...  vulnerable.
+Testing duckduckgo.com...  not vulnerable.
 Testing eastday.com...  no SSL.
 Testing moneycontrol.com...  no SSL.
 Testing blogspot.com.tr...  not vulnerable.
