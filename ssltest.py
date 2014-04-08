@@ -60,7 +60,10 @@ def recvall(s, length, timeout=5):
             return None
         r, w, e = select.select([s], [], [], 5)
         if s in r:
-            data = s.recv(remain)
+            try:
+                data = s.recv(remain)
+            except Exception, e:
+                return None
             # EOF?
             if not data:
                 return None
