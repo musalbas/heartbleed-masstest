@@ -16,7 +16,7 @@ import select
 import re
 from optparse import OptionParser
 
-options = OptionParser(usage='%prog file max', description='Test for SSL heartbeat vulnerability (CVE-2014-0160) on multiple domains, takes in Alexa top X CSV file')
+options = OptionParser(usage='%prog file max', description='Test for SSL heartbleed vulnerability (CVE-2014-0160) on multiple domains, takes in Alexa top X CSV file')
 
 def h2bin(x):
     return x.replace(' ', '').replace('\n', '').decode('hex')
