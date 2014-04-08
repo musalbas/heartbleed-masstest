@@ -1,5 +1,4 @@
 Testing yahoo.com...  vulnerable.
-Testing imgur.com...  not vulnerable.
 Testing stackoverflow.com...  vulnerable.
 Testing kickass.to...  vulnerable.
 Testing flickr.com...  vulnerable.
