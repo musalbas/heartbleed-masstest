@@ -37,7 +37,6 @@ Testing 123rf.com...  vulnerable.
 Testing m-w.com...  vulnerable.
 Testing dreamstime.com...  vulnerable.
 Testing amung.us...  vulnerable.
-Testing duckduckgo.com... not vulnerable.
 Testing leo.org...  vulnerable.
 Testing eventbrite.com...  vulnerable.
 Testing wetransfer.com...  vulnerable.
@@ -57,6 +56,7 @@ Testing 500px.com...  vulnerable.
 
 -
 
+Testing duckduckgo.com... not vulnerable.
 Testing google.com...  not vulnerable.
 Testing facebook.com...  not vulnerable.
 Testing youtube.com...  not vulnerable.
@@ -1059,5 +1059,5 @@ Testing linkwithin.com...  no SSL.
 Testing homeway.com.cn...  no SSL.
 
 No SSL: 512
-Vulnerable: 47
-Not vulnerable: 441
+Vulnerable: 46
+Not vulnerable: 442
