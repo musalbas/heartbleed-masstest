@@ -18,9 +18,10 @@ Overview
 
 [Vulnerable sites](#627-of-the-top-10000-sites-appeared-vulnerable-on-april-8-1600-utc) | [All sites](#test-results-of-top-1000-websites-on-april-8-1600-utc)
 
-### 627 of the top 10000 sites appeared vulnerable on April 8, 16:00 UTC:
+### 630 of the top 10000 sites appeared vulnerable on April 8, 16:00 UTC:
 
     yahoo.com
+    imgur.com
     stackoverflow.com
     kickass.to
     flickr.com
@@ -50,6 +51,7 @@ Overview
     dreamstime.com
     majesticseo.com
     amung.us
+    duckduckgo.com
     leo.org
     eventbrite.com
     wetransfer.com
@@ -58,6 +60,7 @@ Overview
     zoho.com
     yts.re
     usmagazine.com
+    fool.com
     letitbit.net
     digitalpoint.com
     picmonkey.com
@@ -701,7 +704,7 @@ site | vulnerable | not vulnerable | no SSL
 `google.it` | | :) |
 `imdb.com` | | | :/
 `apple.com` | | | :/
-`imgur.com` | | :) |
+`imgur.com` | :( | |
 `cnn.com` | | | :/
 `neobux.com` | | :) |
 `craigslist.org` | | :) |
@@ -1314,7 +1317,7 @@ site | vulnerable | not vulnerable | no SSL
 `wow.com` | | | :/
 `cnbc.com` | | :) |
 `google.kz` | | :) |
-`duckduckgo.com` | | :) |
+`duckduckgo.com` | :( | |
 `eastday.com` | | | :/
 `moneycontrol.com` | | | :/
 `blogspot.com.tr` | | :) |
@@ -1501,7 +1504,7 @@ site | vulnerable | not vulnerable | no SSL
 `deezer.com` | | :) |
 `aizhan.com` | | | :/
 `zimbio.com` | | | :/
-`fool.com` | | :) |
+`fool.com` | :( | |
 `mercadolibre.com.ve` | | | :/
 `digitalpoint.com` | :( | |
 `gtmetrix.com` | | :) |

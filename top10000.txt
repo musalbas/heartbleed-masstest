@@ -8,6 +8,7 @@ http://filippo.io/Heartbleed/
 -
 
 Testing yahoo.com...  vulnerable.
+Testing imgur.com...  vulnerable.
 Testing stackoverflow.com...  vulnerable.
 Testing kickass.to...  vulnerable.
 Testing flickr.com...  vulnerable.
@@ -37,6 +38,7 @@ Testing m-w.com...  vulnerable.
 Testing dreamstime.com...  vulnerable.
 Testing majesticseo.com...  vulnerable.
 Testing amung.us...  vulnerable.
+Testing duckduckgo.com...  vulnerable.
 Testing leo.org...  vulnerable.
 Testing eventbrite.com...  vulnerable.
 Testing wetransfer.com...  vulnerable.
@@ -46,7 +48,7 @@ Testing zoho.com...  vulnerable.
 Testing yts.re...  vulnerable.
 Testing usmagazine.com...  vulnerable.
 Testing letitbit.net...  vulnerable.
-Testing fool.com...  not vulnerable.
+Testing fool.com...  vulnerable.
 Testing digitalpoint.com...  vulnerable.
 Testing picmonkey.com...  vulnerable.
 Testing petflow.com...  vulnerable.
@@ -686,7 +688,7 @@ Testing google.es...  not vulnerable.
 Testing google.it...  not vulnerable.
 Testing imdb.com...  no SSL.
 Testing apple.com...  no SSL.
-Testing imgur.com...  not vulnerable.
+Testing imgur.com...  vulnerable.
 Testing cnn.com...  no SSL.
 Testing neobux.com...  not vulnerable.
 Testing craigslist.org...  not vulnerable.
@@ -1299,7 +1301,7 @@ Testing linksynergy.com...  no SSL.
 Testing wow.com...  no SSL.
 Testing cnbc.com...  not vulnerable.
 Testing google.kz...  not vulnerable.
-Testing duckduckgo.com...  not vulnerable.
+Testing duckduckgo.com...  vulnerable.
 Testing eastday.com...  no SSL.
 Testing moneycontrol.com...  no SSL.
 Testing blogspot.com.tr...  not vulnerable.
@@ -10640,5 +10642,5 @@ Testing bigxvideos.com...  no SSL.
 Testing winscp.net...  vulnerable.
 
 No SSL: 5683
-Vulnerable: 627
-Not vulnerable: 3690
+Vulnerable: 630
+Not vulnerable: 3687
