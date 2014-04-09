@@ -56,7 +56,6 @@ Testing 500px.com...  vulnerable.
 
 -
 
-Testing duckduckgo.com... not vulnerable.
 Testing google.com...  not vulnerable.
 Testing facebook.com...  not vulnerable.
 Testing youtube.com...  not vulnerable.
@@ -1059,5 +1058,5 @@ Testing linkwithin.com...  no SSL.
 Testing homeway.com.cn...  no SSL.
 
 No SSL: 512
-Vulnerable: 46
-Not vulnerable: 442
+Vulnerable: 45
+Not vulnerable: 443
