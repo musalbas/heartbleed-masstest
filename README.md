@@ -16,7 +16,7 @@ Please note that subdomains aren't tested, so sites that don't have SSL on their
 Overview
 --------
 
-[Vulnerable sites](#627-of-the-top-10000-sites-appeared-vulnerable-on-april-8-1600-utc) | [All sites](#test-results-of-top-1000-websites-on-april-8-1600-utc)
+[Vulnerable sites](#630-of-the-top-10000-sites-appeared-vulnerable-on-april-8-1600-utc) | [All sites](#test-results-of-top-1000-websites-on-april-8-1600-utc)
 
 ### 630 of the top 10000 sites appeared vulnerable on April 8, 16:00 UTC:
 
