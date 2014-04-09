@@ -1,5 +1,9 @@
-Disclaimer: This scan was performed around April 8, 11:30 UTC, so please stop
-sending pull requests to remove your site!
+Disclaimer: This scan was performed around April 8, 11:30 UTC. Websites listed
+as vulnerable may no longer be vulnerable. This list serves as a snapshot of
+vulnerable sites at the time of the scan.
+
+To check if a site is still vulnerable, you may use the tool at:
+http://filippo.io/Heartbleed/
 
 -
 
