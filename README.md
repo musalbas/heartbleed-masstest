@@ -3,7 +3,9 @@ heartbleed-masstest
 
 This repo contains a script to automatically test sites for vulnerability to the [Heartbleed Bug (CVE-2014-0160)](http://heartbleed.com/).
 
-This repo also contains test results for the Alexa top 1 million sites as of around April 8, 16:00 UTC, so please stop sending pull requests to remove your site!
+This repo also contains test results for the Alexa top 10,000 sites as of around April 8, 16:00 UTC.
+
+Please note that subdomains aren't tested, so sites that don't have SSL on their main domain will appear as "no SSL".
 
 Overview
 --------
