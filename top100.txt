@@ -116,5 +116,5 @@ Testing adobe.com...  not vulnerable.
 Testing vimeo.com...  no SSL.
 
 No SSL: 41
-Vulnerable: 5
-Not vulnerable: 54
+Vulnerable: 4
+Not vulnerable: 55
