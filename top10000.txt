@@ -10640,5 +10640,5 @@ Testing bigxvideos.com...  no SSL.
 Testing winscp.net...  vulnerable.
 
 No SSL: 5683
-Vulnerable: 628
-Not vulnerable: 3689
+Vulnerable: 627
+Not vulnerable: 3690
