@@ -14,9 +14,9 @@ Please note that subdomains aren't tested, so sites that don't have SSL on their
 Overview
 --------
 
-[Vulnerable sites](#628-of-the-top-10000-sites-appeared-vulnerable) | [All sites](#test-results-of-top-1000-websites)
+[Vulnerable sites](#627-of-the-top-10000-sites-appeared-vulnerable) | [All sites](#test-results-of-top-1000-websites)
 
-### 628 of the top 10000 sites appeared vulnerable:
+### 627 of the top 10000 sites appeared vulnerable:
 
     yahoo.com
     stackoverflow.com
@@ -57,7 +57,6 @@ Overview
     yts.re
     usmagazine.com
     letitbit.net
-    fool.com
     digitalpoint.com
     picmonkey.com
     petflow.com
@@ -1500,7 +1499,7 @@ site | vulnerable | not vulnerable | no SSL
 `deezer.com` | | :) |
 `aizhan.com` | | | :/
 `zimbio.com` | | | :/
-`fool.com` | :( | |
+`fool.com` | | :) |
 `mercadolibre.com.ve` | | | :/
 `digitalpoint.com` | :( | |
 `gtmetrix.com` | | :) |
