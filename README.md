@@ -14,9 +14,9 @@ Please note that subdomains aren't tested, so sites that don't have SSL on their
 Overview
 --------
 
-[Vulnerable sites](#627-of-the-top-10000-sites-appeared-vulnerable) | [All sites](#test-results-of-top-1000-websites)
+[Vulnerable sites](#627-of-the-top-10000-sites-appeared-vulnerable-on-april-8-1600-utc) | [All sites](#test-results-of-top-1000-websites-on-april-8-1600-utc)
 
-### 627 of the top 10000 sites appeared vulnerable:
+### 627 of the top 10000 sites appeared vulnerable on April 8, 16:00 UTC:
 
     yahoo.com
     stackoverflow.com
@@ -647,7 +647,7 @@ Overview
     winscp.net
 
 
-### Test results of top 1000 websites:
+### Test results of top 1000 websites on April 8, 16:00 UTC:
 
 site | vulnerable | not vulnerable | no SSL
 :--- |:---:|:---:|:---:
