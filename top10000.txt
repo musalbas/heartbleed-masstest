@@ -52,7 +52,6 @@ Testing picmonkey.com...  vulnerable.
 Testing petflow.com...  vulnerable.
 Testing squidoo.com...  vulnerable.
 Testing avazutracking.net...  vulnerable.
-Testing elegantthemes.com...  vulnerable.
 Testing 500px.com...  vulnerable.
 Testing wpmudev.org...  vulnerable.
 Testing junbi-tracker.com...  vulnerable.
@@ -10638,7 +10637,8 @@ Testing jxgdw.com...  no SSL.
 Testing avaz.ba...  not vulnerable.
 Testing bigxvideos.com...  no SSL.
 Testing winscp.net...  vulnerable.
+Testing elegantthemes.com...  not vulnerable.
 
 No SSL: 5683
-Vulnerable: 628
-Not vulnerable: 3689
+Vulnerable: 627
+Not vulnerable: 3690

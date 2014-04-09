@@ -52,7 +52,6 @@ Testing picmonkey.com...  vulnerable.
 Testing petflow.com...  vulnerable.
 Testing squidoo.com...  vulnerable.
 Testing avazutracking.net...  vulnerable.
-Testing elegantthemes.com...  vulnerable.
 Testing 500px.com...  vulnerable.
 
 -
@@ -1057,7 +1056,8 @@ Testing google.by...  not vulnerable.
 Testing merdeka.com...  no SSL.
 Testing linkwithin.com...  no SSL.
 Testing homeway.com.cn...  no SSL.
+Testing elegantthemes.com...  not vulnerable.
 
 No SSL: 512
-Vulnerable: 47
-Not vulnerable: 441
+Vulnerable: 46
+Not vulnerable: 442
