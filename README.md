@@ -7,7 +7,7 @@ This repo also contains test results for the Alexa top 10,000 sites as of around
 as vulnerable may no longer be vulnerable. This list serves as a snapshot of
 vulnerable sites at the time of the scan.**
 
-**This is not a tracker which tracks which sites are vulnerable or not over time, but shows which sites have been effected.**
+**This is not a tracker which tracks which sites are vulnerable or not over time, but shows which sites have been affected.**
 
 To check if a site is still vulnerable, you may use the tool at http://filippo.io/Heartbleed/.
 
