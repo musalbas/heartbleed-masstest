@@ -16,9 +16,10 @@ import select
 import re
 from optparse import OptionParser
 import netaddr
+from collections import defaultdict
 
-options = OptionParser(usage='%prog file max', description='Test for SSL heartbleed vulnerability (CVE-2014-0160) on multiple domains, takes in Alexa top X CSV file')
-
+options = OptionParser(usage='%prog <network> [network2] [network3] ...', description='Test for SSL heartbleed vulnerability (CVE-2014-0160) on multiple domains')
+options.add_option('--input', '-i', dest="input_file", default=[], action="append", help="Optional input file of networks or ip addresses, one address per line")
 
 def h2bin(x):
     return x.replace(' ', '').replace('\n', '').decode('hex')
@@ -147,31 +148,33 @@ def is_vulnerable(domain):
 
 def main():
     opts, args = options.parse_args()
-    if not args:
+    if not args and not opts.input_file:
         options.print_help()
         return
 
-    counter_nossl = 0
-    counter_notvuln = 0
-    counter_vuln = 0
+    for i in opts.input_file:
+        with open(i) as f:
+            for line in f:
+                args.append(line)
+
+    counter = defaultdict(int)
     logfile = open('log.txt', 'a')
 
     remote_networks = map(lambda x: netaddr.IPNetwork(x), args)
     for network in remote_networks:
         for host in network:
+            host = str(host)
             result = is_vulnerable(host)
+            counter[result] += 1
             current_time = time.time()
             message = "{current_time} {host} {result}".format(**locals())
             print message
             logfile.write(message + "\n")
 
 
-
-
-
-    print "No SSL: " + str(counter_nossl)
-    print "Vulnerable: " + str(counter_vuln)
-    print "Not vulnerable: " + str(counter_notvuln)
+    print "No SSL: " + str(counter[None])
+    print "Vulnerable: " + str(counter[True])
+    print "Not vulnerable: " + str(counter[False])
 
 if __name__ == '__main__':
     main()
