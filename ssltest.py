@@ -170,9 +170,10 @@ def main():
         with open(opts.log_file) as f:
             for line in f:
                 tmp = line.split()
-                if len(tmp) != 3:
+                host = tmp[1]
+                if len(tmp) != 3 and host not in hosts_to_skip:
                     continue
-                hosts_to_skip.append(hosts[1])
+                hosts_to_skip.append(host)
         print "Skipping %s hosts" % (len(hosts_to_skip), )
 
 
