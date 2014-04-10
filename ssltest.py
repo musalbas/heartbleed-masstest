@@ -198,6 +198,8 @@ def main():
     for network in remote_networks:
         for host in network:
             host = str(host)
+            if host in hosts_to_skip:
+                continue
             result = is_vulnerable(host, opts.timeout)
             counter[result] += 1
             current_time = time.time()
