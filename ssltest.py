@@ -60,8 +60,6 @@ def hexdump(s):
         lin = [c for c in s[b: b + 16]]
         hxdat = ' '.join('%02X' % ord(c) for c in lin)
         pdat = ''.join((c if 32 <= ord(c) <= 126 else '.')for c in lin)
-        #print '  %04x: %-48s %s' % (b, hxdat, pdat)
-    #print
 
 
 def recvall(s, length, timeout=5):
@@ -89,14 +87,11 @@ def recvall(s, length, timeout=5):
 def recvmsg(s):
     hdr = recvall(s, 5)
     if hdr is None:
-        #print 'Unexpected EOF receiving record header - server closed connection'
         return None, None, None
     typ, ver, ln = struct.unpack('>BHH', hdr)
     pay = recvall(s, ln, 10)
     if pay is None:
-        #print 'Unexpected EOF receiving record payload - server closed connection'
         return None, None, None
-    #print ' ... received message: type = %d, ver = %04x, length = %d' % (typ, ver, len(pay))
     return typ, ver, pay
 
 
@@ -105,23 +100,17 @@ def hit_hb(s):
     while True:
         typ, ver, pay = recvmsg(s)
         if typ is None:
-            #print 'No heartbeat response received, server likely not vulnerable'
             return False
 
         if typ == 24:
-            #print 'Received heartbeat response:'
             hexdump(pay)
             if len(pay) > 3:
-                #print 'WARNING: server returned more data than it should - server is vulnerable!'
                 return True
             else:
-                #print 'Server processed malformed heartbeat, but did not return any extra data.'
                 return False
 
         if typ == 21:
-            #print 'Received alert:'
             hexdump(pay)
-            #print 'Server returned error, likely not vulnerable'
             return False
 
 
@@ -143,7 +132,6 @@ def is_vulnerable(host, timeout):
     while True:
         typ, ver, pay = recvmsg(s)
         if typ is None:
-            #print 'Server closed connection without sending Server Hello.'
             return None
         # Look for server hello done message.
         if typ == 22 and ord(pay[0]) == 0x0E:
@@ -243,19 +231,17 @@ def main():
     # If any input files were provided, parse through them and add all addresses to "args"
     for input_file in opts.input_file:
         with open(input_file) as f:
-            hostlist = []
             for line in f:
                 words = line.split()
                 if not words:
                     continue
                 if line.startswith("Discovered open port"):
-                    hostlist.append(words.pop())
+                    args.append(words.pop())
                 elif len(words) == 1:
-                    hostlist.append(words[0])
+                    args.append(words[0])
                 else:
                     print "Skipping invalid input line: " % line
                     continue
-            args.append(hostlist)
 
     # For every network in args, convert it to a netaddr network, so we can iterate through each host
     remote_networks = clean_hostlist(args)
