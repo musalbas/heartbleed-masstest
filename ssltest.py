@@ -20,6 +20,7 @@ from collections import defaultdict
 
 options = OptionParser(usage='%prog <network> [network2] [network3] ...', description='Test for SSL heartbleed vulnerability (CVE-2014-0160) on multiple domains')
 options.add_option('--input', '-i', dest="input_file", default=[], action="append", help="Optional input file of networks or ip addresses, one address per line")
+options.add_option('--logfile', '-o', dest="log_file", default=[], action="append", help="Optional logfile destination")
 
 def h2bin(x):
     return x.replace(' ', '').replace('\n', '').decode('hex')
@@ -147,18 +148,23 @@ def is_vulnerable(domain):
 
 
 def main():
+    counter = defaultdict(int)
     opts, args = options.parse_args()
+
     if not args and not opts.input_file:
         options.print_help()
         return
+
+    if opts.log_file:
+        logfile = open(opts.log_file, 'a')
+    else:
+        logfile = None
 
     for i in opts.input_file:
         with open(i) as f:
             for line in f:
                 args.append(line)
 
-    counter = defaultdict(int)
-    logfile = open('log.txt', 'a')
 
     remote_networks = map(lambda x: netaddr.IPNetwork(x), args)
     for network in remote_networks:
@@ -169,7 +175,8 @@ def main():
             current_time = time.time()
             message = "{current_time} {host} {result}".format(**locals())
             print message
-            logfile.write(message + "\n")
+            if opts.logfile:
+                logfile.write(message + "\n")
 
 
     print "No SSL: " + str(counter[None])
