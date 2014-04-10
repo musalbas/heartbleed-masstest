@@ -20,7 +20,9 @@ from collections import defaultdict
 
 options = OptionParser(usage='%prog <network> [network2] [network3] ...', description='Test for SSL heartbleed vulnerability (CVE-2014-0160) on multiple domains')
 options.add_option('--input', '-i', dest="input_file", default=[], action="append", help="Optional input file of networks or ip addresses, one address per line")
-options.add_option('--logfile', '-o', dest="log_file", default=[], action="append", help="Optional logfile destination")
+options.add_option('--logfile', '-o', dest="log_file", default=None, help="Optional logfile destination")
+options.add_option('--resume', dest="resume", default=False, help="Do not rescan hosts that are already in the logfile")
+options.add_option('--timeout', '-t', dest="timeout", default=2, help="How long to wait for remote host to respond before timing out")
 
 def h2bin(x):
     return x.replace(' ', '').replace('\n', '').decode('hex')
@@ -119,7 +121,7 @@ def hit_hb(s):
             return False
 
 
-def is_vulnerable(domain):
+def is_vulnerable(host, timeout):
     """ Check if remote host is vulnerable to heartbleed
 
      Returns:
@@ -128,9 +130,9 @@ def is_vulnerable(domain):
         True  -- Remote host might be vulnerable
     """
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.settimeout(2)
+    s.settimeout(int(timeout))
     try:
-        s.connect((domain, 443))
+        s.connect((host, 443))
     except Exception, e:
         return None
     s.send(hello)
@@ -149,6 +151,9 @@ def is_vulnerable(domain):
 
 def main():
     counter = defaultdict(int)
+    logfile = None
+    hosts_to_skip = []
+
     opts, args = options.parse_args()
 
     if not args and not opts.input_file:
@@ -157,26 +162,49 @@ def main():
 
     if opts.log_file:
         logfile = open(opts.log_file, 'a')
-    else:
-        logfile = None
 
-    for i in opts.input_file:
-        with open(i) as f:
+    if opts.resume:
+        if not opts.log_file:
+            options.error("You need to provide -l with --resume")
+        # Open the logfile, add all hosts there into hosts_to_skip
+        with open(opts.log_file) as f:
             for line in f:
-                args.append(line)
+                tmp = line.split()
+                if len(tmp) != 3:
+                    continue
+                hosts_to_skip.append(hosts[1])
+        print "Skipping %s hosts" % (len(hosts_to_skip), )
 
 
+    # If any input files were provided, parse through them and add all addresses to "args"
+    for input_file in opts.input_file:
+        with open(input_file) as f:
+            for line in f:
+                words = line.split()
+                if not words:
+                    continue
+                if line.startswith("Discovered open port"):
+                    args.append(words.pop())
+                elif len(words) == 1:
+                    args.append(words[0])
+                else:
+                    print "Skipping invalid input line: " % line
+                    continue
+
+    # For every network in args, convert it to a netaddr network, so we can iterate through each host
     remote_networks = map(lambda x: netaddr.IPNetwork(x), args)
+
     for network in remote_networks:
         for host in network:
             host = str(host)
-            result = is_vulnerable(host)
+            result = is_vulnerable(host, opts.timeout)
             counter[result] += 1
             current_time = time.time()
             message = "{current_time} {host} {result}".format(**locals())
             print message
-            if opts.logfile:
+            if logfile:
                 logfile.write(message + "\n")
+                logfile.flush()
 
 
     print "No SSL: " + str(counter[None])
