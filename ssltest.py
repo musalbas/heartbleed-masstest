@@ -127,7 +127,7 @@ def is_vulnerable(domain):
     #sys.stdout.flush()
     while True:
         typ, ver, pay = recvmsg(s)
-        if typ == None:
+        if typ is None:
             #print 'Server closed connection without sending Server Hello.'
             return None
         # Look for server hello done message.
@@ -145,26 +145,26 @@ def main():
         options.print_help()
         return
 
-    counter_nossl = 0;
-    counter_notvuln = 0;
-    counter_vuln = 0;
+    counter_nossl = 0
+    counter_notvuln = 0
+    counter_vuln = 0
 
     f = open(args[0], 'r')
     for line in f:
         rank, domain = line.split(',')
         domain = domain.strip()
         print "Testing " + domain + "... ",
-        sys.stdout.flush();
-        result = is_vulnerable(domain);
+        sys.stdout.flush()
+        result = is_vulnerable(domain)
         if result is None:
             print "no SSL."
-            counter_nossl += 1;
+            counter_nossl += 1
         elif result:
             print "vulnerable."
-            counter_vuln += 1;
+            counter_vuln += 1
         else:
             print "not vulnerable."
-            counter_notvuln += 1;
+            counter_notvuln += 1
 
         if int(rank) >= int(args[1]):
             break
