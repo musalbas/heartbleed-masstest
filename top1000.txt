@@ -29,8 +29,6 @@ Testing beeg.com...  vulnerable.
 Testing seznam.cz...  vulnerable.
 Testing okcupid.com...  vulnerable.
 Testing pch.com...  vulnerable.
-Testing xda-developers.com...  vulnerable.
-Testing steamcommunity.com...  vulnerable.
 Testing slate.com...  vulnerable.
 Testing scoop.it...  vulnerable.
 Testing hidemyass.com...  vulnerable.
@@ -570,7 +568,7 @@ Testing habrahabr.ru...  no SSL.
 Testing telexfree.com...  not vulnerable.
 Testing newegg.com...  no SSL.
 Testing shareasale.com...  no SSL.
-Testing xda-developers.com...  vulnerable.
+Testing xda-developers.com... not vulnerable.
 Testing expedia.com...  no SSL.
 Testing ig.com.br...  no SSL.
 Testing theblaze.com...  no SSL.
@@ -643,7 +641,7 @@ Testing mirror.co.uk...  no SSL.
 Testing seesaa.net...  not vulnerable.
 Testing pcbaby.com.cn...  no SSL.
 Testing mobile.de...  no SSL.
-Testing steamcommunity.com...  vulnerable.
+Testing steamcommunity.com... not vulnerable.
 Testing slate.com...  vulnerable.
 Testing tickld.com...  not vulnerable.
 Testing soku.com...  no SSL.
