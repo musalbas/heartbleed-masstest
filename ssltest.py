@@ -14,10 +14,19 @@ import socket
 import time
 import select
 import re
-from optparse import OptionParser
+import threading
 import netaddr
+import json
+import os
+from optparse import OptionParser
 from collections import defaultdict
 from multiprocessing.dummy import Pool
+
+host_status = {}
+hosts_to_skip = []
+counter = defaultdict(int)
+lock = threading.Lock()
+
 
 options = OptionParser(usage='%prog <network> [network2] [network3] ...', description='Test for SSL heartbleed vulnerability (CVE-2014-0160) on multiple domains')
 options.add_option('--input', '-i', dest="input_file", default=[], action="append", help="Optional input file of networks or ip addresses, one address per line")
@@ -25,6 +34,8 @@ options.add_option('--logfile', '-o', dest="log_file", default="results.txt", he
 options.add_option('--resume', dest="resume", action="store_true", default=False, help="Do not rescan hosts that are already in the logfile")
 options.add_option('--timeout', '-t', dest="timeout", default=5, help="How long to wait for remote host to respond before timing out")
 options.add_option('--threads', dest="threads", default=100, help="If specific, run X concurrent threads")
+options.add_option('--json', dest="json_file", default=None, help="Save data as json into this file")
+options.add_option('--only-vulnerable', dest="only_vulnerable", action="store_true", default=False, help="Only scan hosts that have been scanned before and were vulnerable")
 opts, args = options.parse_args()
 
 
@@ -140,20 +151,27 @@ def is_vulnerable(host, timeout):
     s.send(hb)
     return hit_hb(s)
 
-hosts_to_skip = []
-counter = defaultdict(int)
-import threading
-lock = threading.Lock()
+
 
 
 def store_results(host, status):
     current_time = time.time()
     with lock:
         counter[status] += 1
+        if host not in host_status:
+            host_status[host] = {}
+        host_status[host]['last_scan'] = current_time
+        if 'first_scan' not in host_status[host]:
+            host_status[host]['first_scan'] = current_time
+        if host_status[host].get('status') and not status:
+            host_status[host]['fixed_at'] = current_time
+        host_status[host]['status'] = status
+
         with open(opts.log_file, 'a') as f:
             message = "{current_time} {host} {status}".format(**locals())
             f.write(message + "\n")
             return message
+
 
 
 def scan_host(host):
@@ -167,7 +185,7 @@ def scan_host(host):
         return
     result = is_vulnerable(host, opts.timeout)
     message = store_results(host, result)
-    print message
+    return message
 
 
 def scan_hostlist(hostlist, threads=5):
@@ -207,8 +225,25 @@ def clean_hostlist(args):
     return result
 
 
+def import_json(filename):
+    """ Reads heartbleed data in json format from this file """
+    with open(filename) as f:
+        json_data = f.read()
+    data = json.loads(json_data)
+    for k, v in data.items():
+        host_status[k] = v
+
+
+def export_json(filename):
+    """ Save scan results into filename as json data
+    """
+    json_data = json.dumps(host_status, indent=4)
+    with open(filename, 'w') as f:
+        f.write(json_data)
+
+
 def main():
-    if not args and not opts.input_file:
+    if not args and not opts.input_file and not opts.json_file:
         options.print_help()
         return
 
@@ -242,12 +277,24 @@ def main():
                 else:
                     print "Skipping invalid input line: " % line
                     continue
+    if opts.json_file:
+        try:
+            import_json(opts.json_file)
+        except IOError:
+            print opts.json_file, "not found. Not importing any data"
+
+
+        for host_name, data in host_status.items():
+            if data['status'] is True or not opts.only_vulnerable:
+                args.append(host_name)
 
     # For every network in args, convert it to a netaddr network, so we can iterate through each host
     remote_networks = clean_hostlist(args)
     for network in remote_networks:
         scan_hostlist(network, threads=opts.threads)
 
+    if opts.json_file:
+        export_json(opts.json_file)
 
     print "No SSL: " + str(counter[None])
     print "Vulnerable: " + str(counter[True])
