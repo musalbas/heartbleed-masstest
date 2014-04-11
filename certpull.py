@@ -60,16 +60,16 @@ def save_cert(ip, cert, proto="https"):
     fh.close()
 
 def download_cert_https(ip):
-    download_cert(ip, port=443)
+    return download_cert(ip, port=443)
 
 def download_cert_smtp(ip):
-    download_cert(ip, port=25, starttls_method="smtp")
+    return download_cert(ip, port=25, starttls_method="smtp")
 
 def download_cert_ldapi(ip):
-    download_cert(ip, port=389, starttls_method="ldap")
+    return download_cert(ip, port=389, starttls_method="ldap")
 
 def download_cert_ldap(ip):
-    download_cert(ip, port=636)
+    return download_cert(ip, port=636)
 
 def parse_heartbleed_json(json_file):
     fh = open(json_file)
