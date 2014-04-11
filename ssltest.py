@@ -258,7 +258,8 @@ def print_summary():
             friendly_status = "Is Vulnerable"
         if data['status'] is False:
             friendly_status = "Not Vulnerable"
-        last_scan = datetime.datetime.fromtimestamp(int(data['last_scan'])).strftime('%Y-%m-%d %H:%M:%S')
+        last_scan = int(float(data['last_scan']))
+        last_scan = datetime.datetime.fromtimestamp(last_scan).strftime('%Y-%m-%d %H:%M:%S')
         counter[friendly_status] += 1
         if opts.only_vulnerable and not data['status']:
             continue
