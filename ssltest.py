@@ -37,6 +37,7 @@ options.add_option('--timeout', '-t', dest="timeout", default=5, help="How long 
 options.add_option('--threads', dest="threads", default=100, help="If specific, run X concurrent threads")
 options.add_option('--json', dest="json_file", default=None, help="Save data as json into this file")
 options.add_option('--only-vulnerable', dest="only_vulnerable", action="store_true", default=False, help="Only scan hosts that have been scanned before and were vulnerable")
+options.add_option('--only-unscanned', dest="only_unscanned", action="store_true", default=False, help="Only scan hosts that appear in the json file but have not been scanned")
 options.add_option('--summary', dest="summary", action="store_true", default=False, help="Read an previously saved json file and print summary")
 opts, args = options.parse_args()
 
@@ -252,17 +253,21 @@ def print_summary():
     counter = defaultdict(int)
     for host, data in host_status.items():
         friendly_status = "unknown"
-        status = data.get('status', "not scanned")
+        status = data.get('status', "Not scanned")
         if status is None:
             friendly_status = "SSL Connection Failed"
         elif status is True:
             friendly_status = "Vulnerable"
         elif status is False:
             friendly_status = "Not Vulnerable"
-        last_scan = int(float(data['last_scan']))
+        else:
+            friendly_status = str(status)
+        last_scan = int(float(data.get('last_scan',0)))
         last_scan = datetime.datetime.fromtimestamp(last_scan).strftime('%Y-%m-%d %H:%M:%S')
         counter[friendly_status] += 1
         if opts.only_vulnerable and not status:
+            continue
+        elif opts.only_unscanned and 'status' in data:
             continue
         print "%-15s %-20s %5s" % (host, last_scan, friendly_status)
     print "------------ summary -----------"
@@ -317,8 +322,11 @@ def main():
 
 
         for host_name, data in host_status.items():
+            if opts.only_unscanned and 'status' in data:
+                continue
             if data.get('status') is True or not opts.only_vulnerable:
                 args.append(host_name)
+
 
     # For every network in args, convert it to a netaddr network, so we can iterate through each host
     remote_networks = clean_hostlist(args)
