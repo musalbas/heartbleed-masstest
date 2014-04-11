@@ -252,21 +252,22 @@ def print_summary():
     counter = defaultdict(int)
     for host, data in host_status.items():
         friendly_status = "unknown"
-        if data['status'] is None:
+        status = data.get('status', "not scanned")
+        if status is None:
             friendly_status = "SSL Connection Failed"
-        if data['status'] is True:
-            friendly_status = "Is Vulnerable"
-        if data['status'] is False:
+        elif status is True:
+            friendly_status = "Vulnerable"
+        elif status is False:
             friendly_status = "Not Vulnerable"
         last_scan = int(float(data['last_scan']))
         last_scan = datetime.datetime.fromtimestamp(last_scan).strftime('%Y-%m-%d %H:%M:%S')
         counter[friendly_status] += 1
-        if opts.only_vulnerable and not data['status']:
+        if opts.only_vulnerable and not status:
             continue
         print "%-15s %-20s %5s" % (host, last_scan, friendly_status)
     print "------------ summary -----------"
     for k,v in counter.items():
-        print "%-20s: %s" % (k, v)
+        print "%-7s %s" % (v, k)
     return
 
 def main():
@@ -316,7 +317,7 @@ def main():
 
 
         for host_name, data in host_status.items():
-            if data['status'] is True or not opts.only_vulnerable:
+            if data.get('status') is True or not opts.only_vulnerable:
                 args.append(host_name)
 
     # For every network in args, convert it to a netaddr network, so we can iterate through each host
@@ -327,9 +328,7 @@ def main():
     if opts.json_file:
         export_json(opts.json_file)
 
-    print "No SSL: " + str(counter[None])
-    print "Vulnerable: " + str(counter[True])
-    print "Not vulnerable: " + str(counter[False])
+    print_summary()
 
 if __name__ == '__main__':
     main()
