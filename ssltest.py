@@ -18,6 +18,7 @@ import threading
 import netaddr
 import json
 import os
+import datetime
 from optparse import OptionParser
 from collections import defaultdict
 from multiprocessing.dummy import Pool
@@ -36,6 +37,7 @@ options.add_option('--timeout', '-t', dest="timeout", default=5, help="How long 
 options.add_option('--threads', dest="threads", default=100, help="If specific, run X concurrent threads")
 options.add_option('--json', dest="json_file", default=None, help="Save data as json into this file")
 options.add_option('--only-vulnerable', dest="only_vulnerable", action="store_true", default=False, help="Only scan hosts that have been scanned before and were vulnerable")
+options.add_option('--summary', dest="summary", action="store_true", default=False, help="Read an previously saved json file and print summary")
 opts, args = options.parse_args()
 
 
@@ -242,7 +244,35 @@ def export_json(filename):
         f.write(json_data)
 
 
+def print_summary():
+    """ Print summary of previously stored json data to screen """
+    if not opts.json_file:
+        options.error("You need to provide --json with --summary")
+    import_json(opts.json_file)
+    counter = defaultdict(int)
+    for host, data in host_status.items():
+        friendly_status = "unknown"
+        if data['status'] is None:
+            friendly_status = "SSL Connection Failed"
+        if data['status'] is True:
+            friendly_status = "Is Vulnerable"
+        if data['status'] is False:
+            friendly_status = "Not Vulnerable"
+        last_scan = datetime.datetime.fromtimestamp(int(data['last_scan'])).strftime('%Y-%m-%d %H:%M:%S')
+        counter[friendly_status] += 1
+        if opts.only_vulnerable and not data['status']:
+            continue
+        print "%-15s %-20s %5s" % (host, last_scan, friendly_status)
+    print "------------ summary -----------"
+    for k,v in counter.items():
+        print "%-20s: %s" % (k, v)
+    return
+
 def main():
+    if opts.summary:
+        print_summary()
+        return
+
     if not args and not opts.input_file and not opts.json_file:
         options.print_help()
         return
