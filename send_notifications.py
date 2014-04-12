@@ -57,7 +57,7 @@ def send_out_emails():
         # address appears in the whois
         if 'ripe' in email:
             continue
-        print "%-15s %-2s hosts" %(email, len(hostlist))
+        print "%-25s %2s hosts" %(email, len(hostlist))
         number_of_vulnerable_hosts = len(hostlist)
         message = EMAIL_HEADER
 
