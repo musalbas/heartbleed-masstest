@@ -28,7 +28,6 @@ hosts_to_skip = []
 counter = defaultdict(int)
 lock = threading.Lock()
 
-
 options = OptionParser(usage='%prog <network> [network2] [network3] ...', description='Test for SSL heartbleed vulnerability (CVE-2014-0160) on multiple domains')
 options.add_option('--input', '-i', dest="input_file", default=[], action="append", help="Optional input file of networks or ip addresses, one address per line")
 options.add_option('--logfile', '-o', dest="log_file", default="results.txt", help="Optional logfile destination")
@@ -39,6 +38,8 @@ options.add_option('--json', dest="json_file", default=None, help="Save data as 
 options.add_option('--only-vulnerable', dest="only_vulnerable", action="store_true", default=False, help="Only scan hosts that have been scanned before and were vulnerable")
 options.add_option('--only-unscanned', dest="only_unscanned", action="store_true", default=False, help="Only scan hosts that appear in the json file but have not been scanned")
 options.add_option('--summary', dest="summary", action="store_true", default=False, help="Read an previously saved json file and print summary")
+options.add_option('--verbose', dest="verbose", action="store_true", default=False, help="Print verbose information to screen")
+options.add_option('--max', dest="max", default=None, help="Exit program after scanning X hosts. Usefull with --only-unscanned")
 opts, args = options.parse_args()
 
 
@@ -161,6 +162,7 @@ def store_results(host, status):
     current_time = time.time()
     with lock:
         counter[status] += 1
+        counter["Total"] += 1
         if host not in host_status:
             host_status[host] = {}
         host_status[host]['last_scan'] = current_time
@@ -176,18 +178,21 @@ def store_results(host, status):
             return message
 
 
-
 def scan_host(host):
     """ Scans a single host, logs into
 
     Returns:
         list(timestamp, ipaddress, vulnerabilitystatus)
     """
+    if opts.max and int(opts.max) >= counter["Total"]:
+        return
     host = str(host)
     if host in hosts_to_skip:
         return
     result = is_vulnerable(host, opts.timeout)
     message = store_results(host, result)
+    if opts.verbose:
+        print message
     return message
 
 
@@ -212,12 +217,14 @@ def clean_hostlist(args):
     hosts = []
     networks = []
     for i in args:
-        # If arg contains a / we assume its a network name
-        if '/' in i:
-            networks.append(netaddr.IPNetwork(i))
         # If it contains any alphanumerics, it might be a domain name
-        elif any(c.isalpha() for c in i):
-            hosts.append(socket.gethostbyname(i))
+        if any(c.isalpha() for c in i):
+            # Special hack, because alexa top x list is kind of weird
+            i = i.split('/')[0]
+            hosts.append(i)
+        # If arg contains a / we assume its a network name
+        elif '/' in i:
+            networks.append(netaddr.IPNetwork(i))
         else:
             hosts.append(i)
     result = []
@@ -275,6 +282,7 @@ def print_summary():
         print "%-7s %s" % (v, k)
     return
 
+
 def main():
     if opts.summary:
         print_summary()
@@ -299,7 +307,6 @@ def main():
                     hosts_to_skip.append(host)
         print "Skipping %s hosts" % (len(hosts_to_skip), )
 
-
     # If any input files were provided, parse through them and add all addresses to "args"
     for input_file in opts.input_file:
         with open(input_file) as f:
@@ -307,6 +314,7 @@ def main():
                 words = line.split()
                 if not words:
                     continue
+                # If input file is in masscan's portscan format
                 if line.startswith("Discovered open port"):
                     args.append(words.pop())
                 elif len(words) == 1:
@@ -326,7 +334,6 @@ def main():
                 continue
             if data.get('status') is True or not opts.only_vulnerable:
                 args.append(host_name)
-
 
     # For every network in args, convert it to a netaddr network, so we can iterate through each host
     remote_networks = clean_hostlist(args)
