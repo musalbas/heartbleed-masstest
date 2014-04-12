@@ -19,6 +19,7 @@ import netaddr
 import json
 import os
 import datetime
+import signal
 from optparse import OptionParser
 from collections import defaultdict
 from multiprocessing.dummy import Pool
@@ -156,24 +157,28 @@ def is_vulnerable(host, timeout):
     return hit_hb(s)
 
 
-
-
-def store_results(host, status):
+def store_results(host_name, current_status):
     current_time = time.time()
     with lock:
-        counter[status] += 1
+        counter[current_status] += 1
         counter["Total"] += 1
-        if host not in host_status:
-            host_status[host] = {}
-        host_status[host]['last_scan'] = current_time
-        if 'first_scan' not in host_status[host]:
-            host_status[host]['first_scan'] = current_time
-        if host_status[host].get('status') and not status:
-            host_status[host]['fixed_at'] = current_time
-        host_status[host]['status'] = status
+        if host_name not in host_status:
+            host_status[host_name] = {}
+        host = host_status[host_name]
+        # Make a note when this host was last scanned
+        host['last_scan'] = current_time
 
+        # Make a note if this host has never been scanned before
+        if 'first_scan' not in host:
+            host['first_scan'] = current_time
+        elif host.get('status', 'never been scanned') != current_status:
+            # If it has a different check result from before
+            host['changelog'] = host.get('changelog', [])
+            changelog_entry = [current_time, current_status]
+            host['changelog'].append(changelog_entry)
+        host['status'] = current_status
         with open(opts.log_file, 'a') as f:
-            message = "{current_time} {host} {status}".format(**locals())
+            message = "{current_time} {host} {current_status}".format(**locals())
             f.write(message + "\n")
             return message
 
@@ -272,16 +277,20 @@ def print_summary():
         last_scan = int(float(data.get('last_scan',0)))
         last_scan = datetime.datetime.fromtimestamp(last_scan).strftime('%Y-%m-%d %H:%M:%S')
         counter[friendly_status] += 1
+        counter['Total'] += 1
         if opts.only_vulnerable and not status:
             continue
         elif opts.only_unscanned and 'status' in data:
             continue
-        print "%-15s %-20s %5s" % (host, last_scan, friendly_status)
+        print "%s %-20s %5s" % (last_scan, host, friendly_status)
     print "------------ summary -----------"
     for k,v in counter.items():
         print "%-7s %s" % (v, k)
     return
 
+def signal_handler(signal, frame):
+    print "Ctrl+C pressed.. aborting..."
+    sys.exit(0)
 
 def main():
     if opts.summary:
@@ -332,7 +341,7 @@ def main():
         for host_name, data in host_status.items():
             if opts.only_unscanned and 'status' in data:
                 continue
-            if data.get('status') is True or not opts.only_vulnerable:
+            if data.get('status', None) is True or not opts.only_vulnerable:
                 args.append(host_name)
 
     # For every network in args, convert it to a netaddr network, so we can iterate through each host
@@ -346,4 +355,5 @@ def main():
     print_summary()
 
 if __name__ == '__main__':
+    signal.signal(signal.SIGINT, signal_handler)
     main()
