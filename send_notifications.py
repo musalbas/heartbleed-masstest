@@ -57,11 +57,11 @@ def send_out_emails():
         # address appears in the whois
         if 'ripe' in email:
             continue
+        print "%-15s %-2s hosts" %(email, len(hostlist))
         number_of_vulnerable_hosts = len(hostlist)
         message = EMAIL_HEADER
 
         message += "%-15s %-10s\n" % ("Host", "Last Scan")
-        hostlist = sorted(hostlist)
         for i in hostlist:
             last_scan = int(i['last_scan'])
             last_scan = datetime.datetime.fromtimestamp(last_scan).strftime('%Y-%m-%d %H:%M:%S')
@@ -123,7 +123,7 @@ might or might not already have a security breach on those systems.
 According to our scans displayed ath ttp://iceland.adagios.org/heartbleed)
 there are at least {total_vulnerable_hosts} hosts still vulnerable in Iceland.
 
-These {number_of_vulnerable_hosts} belong to you:
+These {number_of_vulnerable_hosts} hosts belong to you:
 
 """
 
