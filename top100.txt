@@ -1,0 +1,121 @@
+Disclaimer: This scan was performed around April 8, 11:30 UTC. Websites listed
+as vulnerable may no longer be vulnerable. This list serves as a snapshot of
+vulnerable sites at the time of the scan.
+
+To check if a site is still vulnerable, you may use the tool at:
+http://filippo.io/Heartbleed/
+
+-
+
+Testing yahoo.com...  vulnerable.
+Testing imgur.com...  vulnerable.
+Testing stackoverflow.com...  vulnerable.
+Testing kickass.to...  vulnerable.
+Testing flickr.com...  vulnerable.
+
+-
+
+Testing google.com...  not vulnerable.
+Testing facebook.com...  not vulnerable.
+Testing youtube.com...  not vulnerable.
+Testing yahoo.com...  vulnerable.
+Testing baidu.com...  no SSL.
+Testing wikipedia.org...  not vulnerable.
+Testing qq.com...  no SSL.
+Testing twitter.com...  not vulnerable.
+Testing live.com...  no SSL.
+Testing linkedin.com...  no SSL.
+Testing taobao.com...  no SSL.
+Testing amazon.com...  not vulnerable.
+Testing google.co.in...  not vulnerable.
+Testing sina.com.cn...  no SSL.
+Testing blogspot.com...  not vulnerable.
+Testing hao123.com...  no SSL.
+Testing weibo.com...  no SSL.
+Testing wordpress.com...  not vulnerable.
+Testing yahoo.co.jp...  no SSL.
+Testing vk.com...  not vulnerable.
+Testing yandex.ru...  not vulnerable.
+Testing ebay.com...  no SSL.
+Testing bing.com...  no SSL.
+Testing google.de...  not vulnerable.
+Testing tmall.com...  no SSL.
+Testing pinterest.com...  not vulnerable.
+Testing sohu.com...  no SSL.
+Testing google.co.uk...  not vulnerable.
+Testing ask.com...  no SSL.
+Testing 360.cn...  no SSL.
+Testing google.fr...  not vulnerable.
+Testing google.co.jp...  not vulnerable.
+Testing msn.com...  no SSL.
+Testing instagram.com...  not vulnerable.
+Testing tumblr.com...  not vulnerable.
+Testing 163.com...  not vulnerable.
+Testing google.com.br...  not vulnerable.
+Testing mail.ru...  not vulnerable.
+Testing microsoft.com...  no SSL.
+Testing paypal.com...  not vulnerable.
+Testing soso.com...  not vulnerable.
+Testing adcash.com...  not vulnerable.
+Testing google.ru...  not vulnerable.
+Testing xvideos.com...  no SSL.
+Testing google.es...  not vulnerable.
+Testing google.it...  not vulnerable.
+Testing imdb.com...  no SSL.
+Testing apple.com...  no SSL.
+Testing imgur.com...  vulnerable.
+Testing cnn.com...  no SSL.
+Testing neobux.com...  not vulnerable.
+Testing craigslist.org...  not vulnerable.
+Testing amazon.co.jp...  not vulnerable.
+Testing google.com.hk...  not vulnerable.
+Testing stackoverflow.com...  vulnerable.
+Testing xhamster.com...  not vulnerable.
+Testing google.com.mx...  not vulnerable.
+Testing reddit.com...  not vulnerable.
+Testing gmw.cn...  no SSL.
+Testing ifeng.com...  no SSL.
+Testing vube.com...  not vulnerable.
+Testing go.com...  no SSL.
+Testing bbc.co.uk...  not vulnerable.
+Testing google.ca...  not vulnerable.
+Testing blogger.com...  not vulnerable.
+Testing fc2.com...  not vulnerable.
+Testing xinhuanet.com...  no SSL.
+Testing aliexpress.com...  no SSL.
+Testing odnoklassniki.ru...  not vulnerable.
+Testing alipay.com...  no SSL.
+Testing akamaihd.net...  no SSL.
+Testing alibaba.com...  no SSL.
+Testing googleusercontent.com...  no SSL.
+Testing wordpress.org...  not vulnerable.
+Testing godaddy.com...  no SSL.
+Testing google.com.tr...  not vulnerable.
+Testing t.co...  not vulnerable.
+Testing huffingtonpost.com...  no SSL.
+Testing pornhub.com...  not vulnerable.
+Testing google.com.au...  not vulnerable.
+Testing about.com...  no SSL.
+Testing people.com.cn...  no SSL.
+Testing amazon.de...  not vulnerable.
+Testing kickass.to...  vulnerable.
+Testing youku.com...  no SSL.
+Testing ebay.de...  no SSL.
+Testing thepiratebay.se...  not vulnerable.
+Testing espn.go.com...  not vulnerable.
+Testing google.pl...  not vulnerable.
+Testing blogspot.in...  not vulnerable.
+Testing clkmon.com...  not vulnerable.
+Testing dailymotion.com...  not vulnerable.
+Testing flickr.com...  vulnerable.
+Testing bp.blogspot.com...  no SSL.
+Testing netflix.com...  no SSL.
+Testing conduit.com...  not vulnerable.
+Testing dailymail.co.uk...  no SSL.
+Testing china.com...  no SSL.
+Testing adobe.com...  not vulnerable.
+Testing vimeo.com...  no SSL.
+
+No SSL: 41
+Vulnerable: 5
+Not vulnerable: 54
