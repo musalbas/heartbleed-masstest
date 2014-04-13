@@ -3,9 +3,6 @@
 # Quick and dirty demonstration of CVE-2014-0160 by Jared Stafford (jspenguin@jspenguin.org)
 # The author disclaims copyright to this source code.
 
-# Quickly and dirtily modified by Mustafa Al-Bassam (mus@musalbas.com) to test
-# the Alexa top X.
-
 # Usage example: python ssltest.py --json heartbleed.json
 
 import sys
