@@ -1,15 +1,17 @@
 heartbleed-masstest
 ===================
 
+The purpose of this repo is to monitor the vulnerability state of top websites to Heartbleed, so that users may know which websites may or may not have been safe, which passwords should be changed and if their data may have been compromised.
+
 This repo contains a script to automatically test sites for vulnerability to the [Heartbleed Bug (CVE-2014-0160)](http://heartbleed.com/).
 
-This repo also contains test results for the Alexa top 10,000 sites as of around April 8, 16:00 UTC. **Websites listed
+This repo also contains test results for the Alexa top 10,000 sites as of around April 8, 16:00 UTC. Websites listed
 as vulnerable may no longer be vulnerable. This list serves as a snapshot of
-vulnerable sites at the time of the scan.**
+vulnerable sites at the time of the scan.
 
 To check if a site is still vulnerable, you may use the tool at http://filippo.io/Heartbleed/.
 
-**Please note that subdomains aren't tested, so sites that don't have SSL on their main domain will appear as "no SSL".**
+Please note that subdomains aren't tested, so sites that don't have SSL on their main domain will appear as "no SSL".
 
 Overview
 --------
