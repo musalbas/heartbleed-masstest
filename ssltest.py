@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 
-# Quick and dirty demonstration of CVE-2014-0160 by Jared Stafford (jspenguin@jspenguin.org)
-# The author disclaims copyright to this source code.
+# Based on the original code by Jared Stafford.
+
+# NOTE: this code has been modified to test for Heartbleed without exploiting
+# the server, therefore the payload does _not_ cause the server to leak private
+# memory.
+# See: https://blog.mozilla.org/security/2014/04/12/testing-for-heartbleed-vulnerability-without-exploiting-the-server/
 
 # Usage example: python ssltest.py --json heartbleed.json
 
