@@ -2,9 +2,10 @@
 
 # Based on the original code by Jared Stafford.
 
-# NOTE: this code has been modified to test for Heartbleed without exploiting
-# the server, therefore the heartbeat request does _not_ cause the server to
-# leak any data from memory or expose any data in an unauthorized manner.
+# NOTE: this code has been modified to test for OpenSSL versions vulnerable to 
+# Heartbleed without exploiting the server, therefore the heartbeat request
+# does _not_ cause the server to leak any data from memory or expose any data
+# in an unauthorized manner.
 # Based on: https://github.com/dchan/metasploit-framework/blob/master/modules/auxiliary/scanner/ssl/openssl_heartbleed.rb
 # See: https://blog.mozilla.org/security/2014/04/12/testing-for-heartbleed-vulnerability-without-exploiting-the-server/
 
