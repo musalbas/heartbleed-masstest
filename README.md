@@ -5,7 +5,7 @@ The purpose of this repo is to monitor the vulnerability state of top websites t
 
 This repo contains a script to automatically test sites for vulnerability to the [Heartbleed Bug (CVE-2014-0160)](http://heartbleed.com/).
 
-*Note: the proof-of-concept has been modified to test for Heartbleed without exploiting the server, so the heartbeat request does not cause the server to leak any data from memory or expose any data in an unauthorized manner. See the [Mozilla blog post](http://blog.mozilla.org/security/2014/04/12/testing-for-heartbleed-vulnerability-without-exploiting-the-server) for an explanation.*
+*Note: the proof-of-concept has been modified to test for OpenSSL versions vulnerable to Heartbleed without exploiting the server, so the heartbeat request does not cause the server to leak any data from memory or expose any data in an unauthorized manner. See the [Mozilla blog post](http://blog.mozilla.org/security/2014/04/12/testing-for-heartbleed-vulnerability-without-exploiting-the-server) for an explanation.*
 
 This repo also contains test results for the Alexa top 10,000 sites as of around April 8, 16:00 UTC. Websites listed
 as vulnerable may no longer be vulnerable. This list serves as a snapshot of
