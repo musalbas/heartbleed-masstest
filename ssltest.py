@@ -43,6 +43,8 @@ options.add_option('--verbose', dest="verbose", action="store_true", default=Fal
 options.add_option('--max', dest="max", default=None, help="Exit program after scanning X hosts. Usefull with --only-unscanned")
 opts, args = options.parse_args()
 
+threadpool = Pool(processes=int(opts.threads))
+
 
 def h2bin(x):
     return x.replace(' ', '').replace('\n', '').decode('hex')
@@ -208,9 +210,14 @@ def scan_hostlist(hostlist, threads=5):
         hostlist    -- Iterable with ip addresses
         threads     -- If specified, run in multithreading mode
     """
-    threads = int(threads)
-    p = Pool(processes=threads)
-    p.map(scan_host, hostlist)
+    task = threadpool.map_async(scan_host, hostlist)
+    while True:
+        print counter['Total'], "hosts done"
+        task.wait(1)
+        if task.ready() or hasattr(threadpool, 'done'):
+            return
+    threadpool.close()
+    threadpool.join()
 
 
 def clean_hostlist(args):
@@ -260,8 +267,10 @@ def export_json(filename):
 def print_summary():
     """ Print summary of previously stored json data to screen """
     if not opts.json_file:
-        options.error("You need to provide --json with --summary")
-    import_json(opts.json_file)
+        pass
+        #options.error("You need to provide --json with --summary")
+    else:
+        import_json(opts.json_file)
     counter = defaultdict(int)
     for host, data in host_status.items():
         friendly_status = "unknown"
@@ -290,7 +299,8 @@ def print_summary():
 
 def signal_handler(signal, frame):
     print "Ctrl+C pressed.. aborting..."
-    sys.exit(0)
+    threadpool.terminate()
+    threadpool.done = True
 
 def main():
     if opts.summary:
