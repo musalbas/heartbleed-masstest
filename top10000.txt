@@ -4778,7 +4778,7 @@ Testing globalpost.com...  no SSL.
 Testing heroturko.me...  no SSL.
 Testing realtor.ca...  not vulnerable.
 Testing perfectworld.com...  no SSL.
-Testing payza.com...  no SSL.
+Testing payza.com...  not vulnerable.
 Testing olx.co.th...  vulnerable.
 Testing who.int...  no SSL.
 Testing fonearena.com...  no SSL.
