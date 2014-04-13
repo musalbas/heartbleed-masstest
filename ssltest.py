@@ -42,7 +42,7 @@ options.add_option('--only-vulnerable', dest="only_vulnerable", action="store_tr
 options.add_option('--only-unscanned', dest="only_unscanned", action="store_true", default=False, help="Only scan hosts that appear in the json file but have not been scanned")
 options.add_option('--summary', dest="summary", action="store_true", default=False, help="Useful with --json. Don't scan, just print old results")
 options.add_option('--verbose', dest="verbose", action="store_true", default=False, help="Print verbose information to screen")
-options.add_option('--max', dest="max", default=None, help="Exit program after scanning X hosts. Usefull with --only-unscanned")
+options.add_option('--max', dest="max", default=None, help="Exit program after scanning X hosts. Useful with --only-unscanned")
 opts, args = options.parse_args()
 
 threadpool = Pool(processes=int(opts.threads))
