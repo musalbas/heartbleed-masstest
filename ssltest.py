@@ -64,10 +64,7 @@ c0 02 00 05 00 04 00 15  00 12 00 09 00 14 00 11
 00 0f 00 01 01                                  
 ''')
 
-hb = h2bin(''' 
-18 03 02 00 01
-01 00
-''')
+hb = "\x18\x03\x02N#\x01N " + "\x01"*20000
 
 
 def hexdump(s):
@@ -111,7 +108,10 @@ def recvmsg(s):
 
 
 def hit_hb(s):
-    s.send(hb)
+    try:
+        s.send(hb)
+    except Exception, e:
+        return False
     while True:
         typ, ver, pay = recvmsg(s)
         if typ is None:
@@ -119,10 +119,7 @@ def hit_hb(s):
 
         if typ == 24:
             hexdump(pay)
-            if len(pay) > 3:
-                return True
-            else:
-                return False
+            return True
 
         if typ == 21:
             hexdump(pay)
