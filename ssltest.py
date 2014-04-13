@@ -6,7 +6,7 @@
 # Quickly and dirtily modified by Mustafa Al-Bassam (mus@musalbas.com) to test
 # the Alexa top X.
 
-# Usage example: python ssltest.py top-1m.csv 10
+# Usage example: python ssltest.py --json heartbleed.json
 
 import sys
 import struct
