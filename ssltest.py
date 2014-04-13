@@ -8,7 +8,7 @@
 # Based on: https://github.com/dchan/metasploit-framework/blob/master/modules/auxiliary/scanner/ssl/openssl_heartbleed.rb
 # See: https://blog.mozilla.org/security/2014/04/12/testing-for-heartbleed-vulnerability-without-exploiting-the-server/
 
-# Usage example: python ssltest.py --json heartbleed.json
+# Usage example: python ssltest.py example.com
 
 import sys
 import struct
