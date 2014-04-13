@@ -38,7 +38,7 @@ options.add_option('--threads', dest="threads", default=100, help="If specific, 
 options.add_option('--json', dest="json_file", default=None, help="Save data as json into this file")
 options.add_option('--only-vulnerable', dest="only_vulnerable", action="store_true", default=False, help="Only scan hosts that have been scanned before and were vulnerable")
 options.add_option('--only-unscanned', dest="only_unscanned", action="store_true", default=False, help="Only scan hosts that appear in the json file but have not been scanned")
-options.add_option('--summary', dest="summary", action="store_true", default=False, help="Read an previously saved json file and print summary")
+options.add_option('--summary', dest="summary", action="store_true", default=False, help="Useful with --json. Don't scan, just print old results")
 options.add_option('--verbose', dest="verbose", action="store_true", default=False, help="Print verbose information to screen")
 options.add_option('--max', dest="max", default=None, help="Exit program after scanning X hosts. Usefull with --only-unscanned")
 opts, args = options.parse_args()
@@ -311,20 +311,6 @@ def main():
         options.print_help()
         return
 
-    # If --resuem specified, find a list of hosts that we will skip
-    if opts.resume:
-        if not opts.log_file:
-            options.error("You need to provide -l with --resume")
-        # Open the logfile, add all hosts there into hosts_to_skip
-        with open(opts.log_file) as f:
-            for line in f:
-                tmp = line.split()
-                host = tmp[1]
-                if len(tmp) != 3:
-                    continue
-                if host not in hosts_to_skip:
-                    hosts_to_skip.append(host)
-        print "Skipping %s hosts" % (len(hosts_to_skip), )
 
     # If any input files were provided, parse through them and add all addresses to "args"
     for input_file in opts.input_file:
