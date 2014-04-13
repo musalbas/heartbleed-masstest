@@ -72,13 +72,6 @@ c0 02 00 05 00 04 00 15  00 12 00 09 00 14 00 11
 hb = "\x18\x03\x02N#\x01N " + "\x01"*20000
 
 
-def hexdump(s):
-    for b in xrange(0, len(s), 16):
-        lin = [c for c in s[b: b + 16]]
-        hxdat = ' '.join('%02X' % ord(c) for c in lin)
-        pdat = ''.join((c if 32 <= ord(c) <= 126 else '.')for c in lin)
-
-
 def recvall(s, length, timeout=5):
     endtime = time.time() + timeout
     rdata = ''
@@ -123,11 +116,9 @@ def hit_hb(s):
             return False
 
         if typ == 24:
-            hexdump(pay)
             return True
 
         if typ == 21:
-            hexdump(pay)
             return False
 
 
