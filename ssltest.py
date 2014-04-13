@@ -3,8 +3,14 @@
 # Based on the original code by Jared Stafford.
 
 # NOTE: this code has been modified to test for Heartbleed without exploiting
+<<<<<<< HEAD
 # the server, therefore the heartbeat request does _not_ cause the server to
 # leak any private memory or expose any secure data in an unauthorized manner.
+=======
+# the server, therefore the payload does _not_ cause the server to leak private
+# memory.
+# Based on: https://github.com/dchan/metasploit-framework/blob/master/modules/auxiliary/scanner/ssl/openssl_heartbleed.rb
+>>>>>>> 4e7ac9221e9b67662e95358516cf63b24d8984aa
 # See: https://blog.mozilla.org/security/2014/04/12/testing-for-heartbleed-vulnerability-without-exploiting-the-server/
 
 # Usage example: python ssltest.py --json heartbleed.json
