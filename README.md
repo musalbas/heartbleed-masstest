@@ -2354,4 +2354,3 @@ site | vulnerable | not vulnerable | no SSL
 `merdeka.com` | | | :/
 `linkwithin.com` | | | :/
 `homeway.com.cn` | | | :/
-
