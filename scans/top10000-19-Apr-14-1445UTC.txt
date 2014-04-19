@@ -1,3 +1,65 @@
+2014-04-19 14:43:18 seocentro.com        Vulnerable
+2014-04-19 14:43:07 sportdog.gr          Vulnerable
+2014-04-19 14:43:03 idwebgame.com        Vulnerable
+2014-04-19 14:43:06 text.ru              Vulnerable
+2014-04-19 14:43:20 dressupgamesite.com  Vulnerable
+2014-04-19 14:43:14 nukistream.com       Vulnerable
+2014-04-19 14:42:57 graphixshare.com     Vulnerable
+2014-04-19 14:42:58 asiatech.ir          Vulnerable
+2014-04-19 14:43:19 gordonua.com         Vulnerable
+2014-04-19 14:43:10 wisegeek.org         Vulnerable
+2014-04-19 14:43:17 fontpalace.com       Vulnerable
+2014-04-19 14:43:38 escapistmagazine.com Vulnerable
+2014-04-19 14:43:34 dha.com.tr           Vulnerable
+2014-04-19 14:43:43 internetlifestylenetwork.com Vulnerable
+2014-04-19 14:43:41 ireporterstv.co      Vulnerable
+2014-04-19 14:43:51 yatedo.com           Vulnerable
+2014-04-19 14:43:28 joomlaportal.de      Vulnerable
+2014-04-19 14:43:41 edlen24.com          Vulnerable
+2014-04-19 14:43:30 adultbay.org         Vulnerable
+2014-04-19 14:43:37 quirktools.com       Vulnerable
+2014-04-19 14:43:33 down1oads.com        Vulnerable
+2014-04-19 14:43:38 themefuse.com        Vulnerable
+2014-04-19 14:43:44 hulkshare.com        Vulnerable
+2014-04-19 14:43:42 nsdl.co.in           Vulnerable
+2014-04-19 14:43:40 okitspace.com        Vulnerable
+2014-04-19 14:43:57 wisegeek.com         Vulnerable
+2014-04-19 14:44:02 haodf.com            Vulnerable
+2014-04-19 14:44:19 anquan.org           Vulnerable
+2014-04-19 14:44:05 perfectworld.eu      Vulnerable
+2014-04-19 14:44:01 gi-backoffice.com    Vulnerable
+2014-04-19 14:44:03 downloadab.com       Vulnerable
+2014-04-19 14:44:16 spinding.com         Vulnerable
+2014-04-19 14:44:16 hobo-web.co.uk       Vulnerable
+2014-04-19 14:44:05 worthytoshare.net    Vulnerable
+2014-04-19 14:44:12 worthytoshare.com    Vulnerable
+2014-04-19 14:44:00 zigzig.ir            Vulnerable
+2014-04-19 14:44:19 gazzetta.gr          Vulnerable
+2014-04-19 14:44:11 rong360.com          Vulnerable
+2014-04-19 14:44:13 sudaneseonline.com   Vulnerable
+2014-04-19 14:44:29 wannonce.com         Vulnerable
+2014-04-19 14:44:09 seratnews.ir         Vulnerable
+2014-04-19 14:44:27 tractionize.com      Vulnerable
+2014-04-19 14:44:39 im286.com            Vulnerable
+2014-04-19 14:44:13 hypebeast.com        Vulnerable
+2014-04-19 14:44:29 telewebion.com       Vulnerable
+2014-04-19 14:44:18 watchcric.com        Vulnerable
+2014-04-19 14:44:33 paperblog.com        Vulnerable
+2014-04-19 14:44:16 adevarul.ro          Vulnerable
+2014-04-19 14:44:58 datropy.com          Vulnerable
+2014-04-19 14:44:24 neurs.net            Vulnerable
+2014-04-19 14:44:33 zbigz.com            Vulnerable
+2014-04-19 14:44:22 neurs.com            Vulnerable
+2014-04-19 14:44:49 telly.com            Vulnerable
+2014-04-19 14:44:52 brainabundance.com   Vulnerable
+2014-04-19 14:44:47 lavozdelmuro.com     Vulnerable
+2014-04-19 14:44:44 postjoint.com        Vulnerable
+2014-04-19 14:44:54 semalt.com           Vulnerable
+2014-04-19 14:44:51 playxn.com           Vulnerable
+2014-04-19 14:44:47 marunadanmalayali.com Vulnerable
+
+-
+
 2014-04-19 14:43:00 exposedwebcams.com   SSL Connection Failed
 2014-04-19 14:43:07 kuwo.cn              Not Vulnerable
 2014-04-19 14:43:12 irib.ir              Not Vulnerable
