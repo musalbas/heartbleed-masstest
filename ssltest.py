@@ -253,8 +253,12 @@ def clean_hostlist(args):
         else:
             hosts.append(i)
     result = []
-    for i in networks:
-        result.append(i)
+    for network in networks:
+        if network.size >= opts.threads:
+            result.append(network)
+        else:
+            for i in network:
+                hosts.append(str(i))
     if hosts:
         result.append(hosts)
     return result
