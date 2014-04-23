@@ -2,7 +2,7 @@
 
 # Based on the original code by Jared Stafford.
 
-# NOTE: this code has been modified to test for OpenSSL versions vulnerable to 
+# NOTE: this code has been modified to test for OpenSSL versions vulnerable to
 # Heartbleed without exploiting the server, therefore the heartbeat request
 # does _not_ cause the server to leak any data from memory or expose any data
 # in an unauthorized manner.
@@ -67,7 +67,7 @@ c0 02 00 05 00 04 00 15  00 12 00 09 00 14 00 11
 00 0b 00 0c 00 18 00 09  00 0a 00 16 00 17 00 08
 00 06 00 07 00 14 00 15  00 04 00 05 00 12 00 13
 00 01 00 02 00 03 00 0f  00 10 00 11 00 23 00 00
-00 0f 00 01 01                                  
+00 0f 00 01 01
 ''')
 
 def recvall(s, length, timeout=5):
@@ -117,7 +117,7 @@ def hit_hb(s):
 
 def unpack_handshake(pay):
     """
-    Unpack the SSL handshake in Multiple Handshake Message 
+    Unpack the SSL handshake in Multiple Handshake Message
     """
     paylen = len(pay)
     offset = 0
@@ -126,7 +126,7 @@ def unpack_handshake(pay):
     while offset < paylen:
         h = pay[offset:offset + 4]
         t, l24 = struct.unpack('>B3s', h)
-        l = struct.unpack('>I', '\x00' + l24)[0] 
+        l = struct.unpack('>I', '\x00' + l24)[0]
         payarr.append((
             t,
             l,
@@ -162,7 +162,7 @@ def is_vulnerable(host, timeout):
             finddone = [t for t, l, p in payarr if t == 14]
             if len(finddone) > 0:
                 break
-    
+
     # construct heartbeat request packet
     ver_chr = chr(ver&0xff)
     hb  = h2bin("18 03") + ver_chr + h2bin("40 00 01 3f fd") + "\x01"*16381
@@ -253,8 +253,12 @@ def clean_hostlist(args):
         else:
             hosts.append(i)
     result = []
-    for i in networks:
-        result.append(i)
+    for network in networks:
+        if network.size >= opts.threads:
+            result.append(network)
+        else:
+            for i in network:
+                hosts.append(str(i))
     if hosts:
         result.append(hosts)
     return result
