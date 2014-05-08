@@ -33,6 +33,7 @@ counter = defaultdict(int)
 lock = threading.Lock()
 
 options = OptionParser(usage='%prog <network> [network2] [network3] ...', description='Test for SSL heartbleed vulnerability (CVE-2014-0160) on multiple domains')
+options.add_option('--port', '-p', dest="port", default=443, help="Port to scan on all hosts or networks, default 443")
 options.add_option('--input', '-i', dest="input_file", default=[], action="append", help="Optional input file of networks or ip addresses, one address per line")
 options.add_option('--logfile', '-o', dest="log_file", default="results.txt", help="Optional logfile destination")
 options.add_option('--resume', dest="resume", action="store_true", default=False, help="Do not rescan hosts that are already in the logfile")
@@ -146,7 +147,7 @@ def is_vulnerable(host, timeout):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(int(timeout))
     try:
-        s.connect((host, 443))
+        s.connect((host, int(opts.port)))
     except Exception, e:
         return None
     s.send(hello)
