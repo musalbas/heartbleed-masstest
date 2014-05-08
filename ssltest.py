@@ -136,7 +136,7 @@ def unpack_handshake(pay):
         offset = offset+l+4
     return payarr
 
-def is_vulnerable(host, timeout):
+def is_vulnerable(host, timeout, port=443):
     """ Check if remote host is vulnerable to heartbleed
 
      Returns:
@@ -147,7 +147,7 @@ def is_vulnerable(host, timeout):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(int(timeout))
     try:
-        s.connect((host, int(opts.port)))
+        s.connect((host, int(port)))
     except Exception, e:
         return None
     s.send(hello)
@@ -210,7 +210,7 @@ def scan_host(host):
     host = str(host)
     if host in hosts_to_skip:
         return
-    result = is_vulnerable(host, opts.timeout)
+    result = is_vulnerable(host, opts.timeout, opts.port)
     message = store_results(host, result)
     if opts.verbose:
         print message
