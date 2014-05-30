@@ -2,7 +2,7 @@
 
 # Based on the original code by Jared Stafford.
 
-# NOTE: this code has been modified to test for OpenSSL versions vulnerable to
+# This code has been modified to test for OpenSSL versions vulnerable to
 # Heartbleed without exploiting the server, therefore the heartbeat request
 # does _not_ cause the server to leak any data from memory or expose any data
 # in an unauthorized manner.
