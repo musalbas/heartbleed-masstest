@@ -1,15 +1,7 @@
 #!/usr/bin/env python
 
-# Based on the original code by Jared Stafford.
-
-# This code has been modified to test for OpenSSL versions vulnerable to
-# Heartbleed without exploiting the server, therefore the heartbeat request
-# does _not_ cause the server to leak any data from memory or expose any data
-# in an unauthorized manner.
-# Based on: https://github.com/dchan/metasploit-framework/blob/master/modules/auxiliary/scanner/ssl/openssl_heartbleed.rb
-# See: https://blog.mozilla.org/security/2014/04/12/testing-for-heartbleed-vulnerability-without-exploiting-the-server/
-
-# Usage example: python ssltest.py example.com
+# Single-host usage example: python ssltest.py example.com
+# To see all options for multiple hosts and multi-threading: python ssltest.py --help
 
 import sys
 import struct
